@@ -37,33 +37,7 @@ void main(void)
 	_enable_interrupt();
 	writeStringToCenter("Press Select",2);
 
-	while(!select){}
-
-	setAddr(0,0);
-	for (i =0; i < 5;i++)
-	{
-		writeFullscreen(egg);
-		_delay_cycles(600000);
-		writeFullscreen(egg3);
-		_delay_cycles(600000);
-	}
-
-	writeFullscreen(egg4);
-	_delay_cycles(600000);
-	writeFullscreen(egg5);
-	_delay_cycles(600000);
-	writeFullscreen(egg6);
-	_delay_cycles(600000);
-	writeFullscreen(egg8);
-	_delay_cycles(1000000);
-
-	clearLCD();
-	writeStringToCenter("It's a cat!", 2);
-
-	_delay_cycles(1000000);
-
-	setAddr(0, 0);
-	clearLCD();
+	//eggHatch();
 
 	while(1)
 	{
@@ -123,6 +97,37 @@ void setupUSIB(void)
 	UCB0BR0 |= 0x01; // 1:1
 	UCB0BR1 = 0;
 	UCB0CTL1 &= ~UCSWRST; // clear SW
+}
+
+void eggHatch(void)
+{
+	while(!select){}
+
+	setAddr(0,0);
+	for (i =0; i < 5;i++)
+	{
+		writeFullscreen(egg);
+		_delay_cycles(600000);
+		writeFullscreen(egg3);
+		_delay_cycles(600000);
+	}
+
+	writeFullscreen(egg4);
+	_delay_cycles(600000);
+	writeFullscreen(egg5);
+	_delay_cycles(600000);
+	writeFullscreen(egg6);
+	_delay_cycles(600000);
+	writeFullscreen(egg8);
+	_delay_cycles(1000000);
+
+	clearLCD();
+	writeStringToCenter("It's a cat!", 2);
+
+	_delay_cycles(1000000);
+
+	setAddr(0, 0);
+	clearLCD();
 }
 
 void home(void)
