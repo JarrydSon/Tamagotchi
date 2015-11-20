@@ -128,6 +128,7 @@ void setupUSIB(void)
 void home(void)
 {
 	unsigned char c = 0;
+	//Cycle through animations for now
 	for (c = 0; c<2 ;c++)
 	{
 		writeFullscreen(cat);
@@ -140,32 +141,7 @@ void home(void)
 		_delay_cycles(400000);
 	}
 
-
-	for (c = 0; c<2 ;c++)
-	{
-		writeFullscreen(medium_cat);
-		_delay_cycles(400000);
-		writeFullscreen(medium_cat2);
-		_delay_cycles(400000);
-		writeFullscreen(medium_cat3);
-		_delay_cycles(400000);
-		writeFullscreen(medium_cat4);
-		_delay_cycles(400000);
-	}
-
-	for (c = 0; c<2 ;c++)
-	{
-		writeFullscreen(big_cat);
-		_delay_cycles(400000);
-		writeFullscreen(big_cat2);
-		_delay_cycles(400000);
-		writeFullscreen(big_cat3);
-		_delay_cycles(400000);
-		writeFullscreen(big_cat4);
-		_delay_cycles(400000);
-		writeFullscreen(big_cat5);
-		_delay_cycles(400000);
-	}
+	current_state = ACTIONS;
 
 }
 
