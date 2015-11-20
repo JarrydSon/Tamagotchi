@@ -36,6 +36,8 @@ void main(void)
 
 	_enable_interrupt();
 	writeStringToCenter("Press Select",2);
+	setAddr(0,0);
+	clearLCD();
 
 	//eggHatch();
 
@@ -64,41 +66,6 @@ void main(void)
 }
 
 //FUNCTION DECLARATIONS
-void setupClocks(void)
-{
-	WDTCTL = WDTPW + WDTHOLD; // disable WDT
-	BCSCTL1 = CALBC1_1MHZ; // 1MHz clock
-	DCOCTL = CALDCO_1MHZ;
-}
-
-void setupPORT1(void)
-{
-	P1OUT |= LCD5110_SCE_PIN + LCD5110_DC_PIN;
-	P1DIR |= LCD5110_SCE_PIN + LCD5110_DC_PIN;
-}
-
-void setupPORT2(void)
-{
-	P2OUT |= BIT0 + BIT1 + BIT2;
-	P2REN |= BIT0 + BIT1 + BIT2;
-	P2IE  |= BIT0 + BIT1 + BIT2;
-	P2IES |= BIT0 + BIT1 + BIT2;
-	P2IFG &= 0x00;
-}
-
-void setupUSIB(void)
-{
-	// setup USIB
-	P1SEL |= LCD5110_SCLK_PIN + LCD5110_DN_PIN;
-	P1SEL2 |= LCD5110_SCLK_PIN + LCD5110_DN_PIN;
-
-	UCB0CTL0 |= UCCKPH + UCMSB + UCMST + UCSYNC; // 3-pin, 8-bit SPI master
-	UCB0CTL1 |= UCSSEL_2; // SMCLK
-	UCB0BR0 |= 0x01; // 1:1
-	UCB0BR1 = 0;
-	UCB0CTL1 &= ~UCSWRST; // clear SW
-}
-
 void eggHatch(void)
 {
 	while(!select){}
@@ -172,6 +139,43 @@ void actions(void)
 		break;
 	}
 }
+
+//SETUP FUNCTIONS
+void setupClocks(void)
+{
+	WDTCTL = WDTPW + WDTHOLD; // disable WDT
+	BCSCTL1 = CALBC1_1MHZ; // 1MHz clock
+	DCOCTL = CALDCO_1MHZ;
+}
+
+void setupPORT1(void)
+{
+	P1OUT |= LCD5110_SCE_PIN + LCD5110_DC_PIN;
+	P1DIR |= LCD5110_SCE_PIN + LCD5110_DC_PIN;
+}
+
+void setupPORT2(void)
+{
+	P2OUT |= BIT0 + BIT1 + BIT2;
+	P2REN |= BIT0 + BIT1 + BIT2;
+	P2IE  |= BIT0 + BIT1 + BIT2;
+	P2IES |= BIT0 + BIT1 + BIT2;
+	P2IFG &= 0x00;
+}
+
+void setupUSIB(void)
+{
+	// setup USIB
+	P1SEL |= LCD5110_SCLK_PIN + LCD5110_DN_PIN;
+	P1SEL2 |= LCD5110_SCLK_PIN + LCD5110_DN_PIN;
+
+	UCB0CTL0 |= UCCKPH + UCMSB + UCMST + UCSYNC; // 3-pin, 8-bit SPI master
+	UCB0CTL1 |= UCSSEL_2; // SMCLK
+	UCB0BR0 |= 0x01; // 1:1
+	UCB0BR1 = 0;
+	UCB0CTL1 &= ~UCSWRST; // clear SW
+}
+
 //INTERRUPTS
 
 #pragma vector=PORT2_VECTOR
@@ -202,6 +206,6 @@ __interrupt void Port_2 (void)
 		}
 	}
 	P2IFG &= ~(BIT0 + BIT1 + BIT2);
-	_delay_cycles(1000);
+	_delay_cycles(10000);
 	_enable_interrupt();
 }
