@@ -1,3 +1,6 @@
+#ifndef _MENU_H_
+#define _MENU_H_
+
 typedef const MenuStruct
 {
 	const char *icon;
@@ -7,3 +10,5 @@ typedef const MenuStruct
 	unsigned char enter;
 	void (*fp) (void);
 } MenuType;
+
+#endif
